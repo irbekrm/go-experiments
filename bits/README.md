@@ -1,5 +1,24 @@
-# bits
+# bits, etc
 Notes on bits, bytes, string encoding etc
+
+## Bits
+
+Mostly notes from Vladimir Vivien's amazing [Medium article](https://medium.com/learning-the-go-programming-language/bit-hacking-with-go-e0acee258827)
+
+### Bit operators
+
+**&** bitwise AND
+
+**|** bitwise OR
+
+**^** XOR
+
+**&^** AND NOT
+
+**<<<** left shift
+
+**>>>** right shift
+
 
 ## Encoding
 
