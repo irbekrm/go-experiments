@@ -20,13 +20,22 @@ Mostly notes from Vladimir Vivien's amazing [Medium article](https://medium.com/
 **>>>** right shift
 
 
-## Encoding
+## Strings, encoding
 
 Notes from Joel Spolsky's amazing [blog post](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/):
 
 - Unicode is a character set where every letter is encoded to a Unicode code point (i.e `U+0061`)
 - UTF-8 is encoding where every Unicode code point can be represented by 1 - 6 bytes (All ASCII chars are represented using a single byte)
 - For browsers, email clients, etc to be able to display strings correctly, it is important that the files etc contain information about how the strings are encoded. For emails, it should be in the header (`charset="UTF-8"`), for webpages use the `<meta>` tag.
+
+Notes from Rob Pike's [blog post](https://blog.golang.org/strings):
+
+- In Go a string is a slice of bytes
+- Go source code is encoded using UTF-8
+- A string value can contain any bytes including ones that are not valid UTF-8 ```s := "\xAD\x01"```
+- A raw string cannot contain escape sequences and is therefore always valid UTF-8 ``    s := `raw string`    ``
+- A Unicode code point is a rune in Go. Alias for rune is int32. A character is rune constant ``    r := `c`    ``
+- When ranging over a string, the range goes over runes not bytes
 
 ## Miscellaneous
 
