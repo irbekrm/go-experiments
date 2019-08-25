@@ -48,13 +48,15 @@ Go [format verbs](https://golang.org/pkg/fmt/) seem to be a nice way to quickly 
     fmt.Printf("In binary form: '%b'\n",b)
     fmt.Printf("In decimal form: '%d'\n",b)
     fmt.Printf("As a Unicode code point: '%U'\n",b)
+    fmt.Printf("Unicode code point and representation: '%#U'\n",b)
     fmt.Printf("The corresponding character: '%c'\n",b)
     // Output:
     // Value: '0x41' of type: 'uint8'
     // In binary form: '1000001'
     // In decimal form: '65'
     // As a Unicode code point: 'U+0041'
+    // Unicode code point and representation: 'U+0041 'A''
     // The corresponding character: 'A'
-    
+
 ```
-[The above in Go Playground](https://play.golang.org/p/JJu8hpFc7YV)
+[The above in Go Playground](https://play.golang.org/p/6I6RDt_Es26)
