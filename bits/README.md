@@ -171,20 +171,21 @@ Go [format verbs](https://golang.org/pkg/fmt/) seem to be a nice way to quickly 
 
 ```
 
-    var b uint8 = 0x41
-    fmt.Printf("Value: '%#v' of type: '%T'\n", b, b)
-    fmt.Printf("In binary form: '%08b'\n",b)
-    fmt.Printf("In decimal form: '%d'\n",b)
-    fmt.Printf("As a Unicode code point: '%U'\n",b)
-    fmt.Printf("Unicode code point and representation: '%#U'\n",b)
-    fmt.Printf("The corresponding character: '%c'\n",b)
-    // Output:
-    // Value: '0x41' of type: 'uint8'
-    // In binary form: '01000001'
-    // In decimal form: '65'
-    // As a Unicode code point: 'U+0041'
-    // Unicode code point and representation: 'U+0041 'A''
-    // The corresponding character: 'A'
-
+	var b uint8 = 0xD1
+	fmt.Printf("Value: '%#[1]v' of type: '%[1]T'\n", b)
+	fmt.Printf("Hexadecimal with prefix: %#[1]x, upper case letters: %#[1]X, without prefix: %[1]x\n",b)
+	fmt.Printf("Octal: %#[1]o\n", b)
+	fmt.Printf("Binary: '%b'\n",b)
+	fmt.Printf("Decimal: '%d'\n",b)
+	fmt.Printf("As a Unicode code point: '%U'\n",b)
+	fmt.Printf("Unicode code point and representation: '%#U'\n",b)
+	fmt.Printf("The corresponding character: '%c'\n",b)
+	// Output:
+	// Value: '0x41' of type: 'uint8'
+	// In binary form: '1000001'
+	// In decimal form: '65'
+	// As a Unicode code point: 'U+0041'
+	// Unicode code point and representation: 'U+0041 'A''
+	// The corresponding character: 'A'
 ```
-[The above in Go Playground](https://play.golang.org/p/6I6RDt_Es26)
+[The above in Go Playground](https://play.golang.org/p/A8rUu9B55Yv)
