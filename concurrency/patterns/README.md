@@ -1,0 +1,1 @@
+Code examples from Rob Pike's awesome [talk](https://www.youtube.com/watch?v=f6kdp27TYZs) about Go Concurrency Patterns
