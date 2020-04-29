@@ -5,8 +5,12 @@ import (
 )
 
 func main() {
+	// Uncomment the line below to run the generator pattern
 	// generator()
-	multiplexer()
+	// Uncomment the line below to run the multiplexer pattern
+	// multiplexer()
+	// Uncomment the line below for sequencing restored
+	restoreSequencing()
 }
 
 // Generator pattern
@@ -25,5 +29,20 @@ func multiplexer() {
 	m := fanIn(boring("Ann"), boring("Joe"))
 	for i := 0; i < 10; i++ {
 		fmt.Printf("You say: %s\n", <-m)
+	}
+}
+
+func restoreSequencing() {
+	msg := fanInRestored(boringRestored("Ann"), boringRestored("Joe"))
+	for i := 0; i < 5; i++ {
+		msg1 := <-msg
+		fmt.Println(msg1.str)
+		msg2 := <-msg
+		fmt.Println(msg2.str)
+		// I don't quite understand how this works
+		// Since we are sharing the same bool channel between these
+		// goroutines why does it matter where the 'true' is sent?
+		msg1.wait <- true
+		msg2.wait <- true
 	}
 }
