@@ -10,7 +10,10 @@ func main() {
 	// Uncomment the line below to run the multiplexer pattern
 	// multiplexer()
 	// Uncomment the line below for sequencing restored
-	restoreSequencing()
+	// restoreSequencing()
+	// multiplexerWithSelect()
+	multiplexerSelectWTimer()
+
 }
 
 // Generator pattern
@@ -44,5 +47,21 @@ func restoreSequencing() {
 		// goroutines why does it matter where the 'true' is sent?
 		msg1.wait <- true
 		msg2.wait <- true
+	}
+}
+
+func multiplexerWithSelect() {
+	ann, joe := boring("Ann"), boring("Joe")
+	c := fanInWithSelect(ann, joe)
+	for i := 0; i < 10; i++ {
+		fmt.Printf("You say: %s\n", <-c)
+	}
+}
+
+func multiplexerSelectWTimer() {
+	ann := boring("Ann")
+	c := selectWithTimer(ann)
+	for i := 0; i < 10; i++ {
+		fmt.Printf("You say: %s\n", <-c)
 	}
 }
