@@ -1,0 +1,1 @@
+Most of these examples are derived from this great talk https://www.youtube.com/watch?v=LSzR0VEraWw&t=39s
