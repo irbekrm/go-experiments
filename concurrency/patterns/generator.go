@@ -17,3 +17,43 @@ func boring(msg string) <-chan string {
 	}()
 	return c
 }
+
+// Stops sending messages when quit signal received
+func boringWQuit(s string, quit <-chan bool) <-chan string {
+	c := make(chan string)
+	go func() {
+		for i := 0; ; i++ {
+			select {
+			case c <- fmt.Sprintf("Hello %s %d\n", s, i):
+				// do nothing
+			case <-quit:
+				fmt.Println("Time over!")
+				return
+			}
+		}
+	}()
+	return c
+}
+
+func quitWCleanup(s string, quit chan string) <-chan string {
+	c := make(chan string)
+	go func() {
+		for i := 0; ; i++ {
+			select {
+			case c <- fmt.Sprintf("Hello %s %d\n", s, i):
+				// do nothing
+			case <-quit:
+				// cleanup any used resources
+				cleanup()
+				// signal that cleanup is finished
+				quit <- "Cleanup finished"
+				return
+			}
+		}
+	}()
+	return c
+}
+
+func cleanup() {
+	fmt.Println("Cleaning up used resources..")
+}

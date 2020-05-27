@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 func main() {
@@ -12,7 +13,10 @@ func main() {
 	// Uncomment the line below for sequencing restored
 	// restoreSequencing()
 	// multiplexerWithSelect()
-	multiplexerSelectWTimer()
+	// multiplexerSelectWTimer()
+	// selectWTotalTimeout(boring("joe"))
+	// generatorWQuit()
+	generatorWCleanup()
 
 }
 
@@ -64,4 +68,24 @@ func multiplexerSelectWTimer() {
 	for i := 0; i < 10; i++ {
 		fmt.Printf("You say: %s\n", <-c)
 	}
+}
+
+func generatorWQuit() {
+	quit := make(chan bool)
+	joe := boringWQuit("joe", quit)
+	for i := rand.Intn(20); i >= 0; i-- {
+		fmt.Println(<-joe)
+	}
+	quit <- true
+}
+
+func generatorWCleanup() {
+	quit := make(chan string)
+	joe := quitWCleanup("joe", quit)
+	for i := rand.Intn(10); i >= 0; i-- {
+		fmt.Println(<-joe)
+	}
+	quit <- "Quit!"
+	// This will block and allow for the goroutine to perform any cleanup operations
+	fmt.Printf("Joe says %s\n", <-quit)
 }
