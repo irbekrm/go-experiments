@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 func main() {
@@ -71,6 +72,7 @@ func multiplexerSelectWTimer() {
 }
 
 func generatorWQuit() {
+	rand.Seed(time.Now().UnixNano())
 	quit := make(chan bool)
 	joe := boringWQuit("joe", quit)
 	for i := rand.Intn(20); i >= 0; i-- {
@@ -80,6 +82,7 @@ func generatorWQuit() {
 }
 
 func generatorWCleanup() {
+	rand.Seed(time.Now().UnixNano())
 	quit := make(chan string)
 	joe := quitWCleanup("joe", quit)
 	for i := rand.Intn(10); i >= 0; i-- {
