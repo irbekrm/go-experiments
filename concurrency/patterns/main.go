@@ -17,7 +17,8 @@ func main() {
 	// multiplexerSelectWTimer()
 	// selectWTotalTimeout(boring("joe"))
 	// generatorWQuit()
-	generatorWCleanup()
+	// generatorWCleanup()
+	search()
 
 }
 
