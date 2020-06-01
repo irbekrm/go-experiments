@@ -31,10 +31,29 @@ func Google(query string) (results []Result) {
 	return
 }
 
+func GoogleWTimeout(query string) (results []Result) {
+	c := make(chan Result)
+	t := time.After(time.Second * 10)
+	go func() { c <- Web(query) }()
+	go func() { c <- Image(query) }()
+	go func() { c <- Video(query) }()
+	for i := 0; i < 3; i++ {
+		select {
+		case <-t:
+			fmt.Println("Timeout!")
+			return
+		case result := <-c:
+			results = append(results, result)
+		}
+	}
+	return
+}
+
 func search() {
 	rand.Seed(time.Now().UnixNano())
 	start := time.Now()
-	results := Google("golang")
+	// results := Google("golang")
+	results := GoogleWTimeout("golang")
 	since := time.Since(start)
 	fmt.Println(results)
 	fmt.Println(since)
@@ -48,4 +67,3 @@ func fakeSearch(kind string) Search {
 		return Result(fmt.Sprintf("The result for %s query about %s\n", kind, query))
 	}
 }
-
