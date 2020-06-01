@@ -7,9 +7,12 @@ import (
 )
 
 var (
-	Web = fakeSearch("Web")
-	Image = fakeSearch("Image")
-	Video = fakeSearch("Video")
+	Web    = fakeSearch("Web")
+	Image  = fakeSearch("Image")
+	Video  = fakeSearch("Video")
+	Web1   = fakeSearch("Web")
+	Image1 = fakeSearch("Image")
+	Video1 = fakeSearch("Video")
 )
 
 type Result string
@@ -49,11 +52,31 @@ func GoogleWTimeout(query string) (results []Result) {
 	return
 }
 
+// Will search with replication(First accepts a bunch of servers) and timeout for the whole search
+func GoogleWTimeoutAndReplication(query string) (results []Result) {
+	c := make(chan Result)
+	t := time.After(time.Second * 15)
+	go func() { c <- First(query, Web, Web1) }()
+	go func() { c <- First(query, Video, Video1) }()
+	go func() { c <- First(query, Image, Image1) }()
+	for i := 0; i < 3; i++ {
+		select {
+		case result := <-c:
+			results = append(results, result)
+		case <-t:
+			fmt.Println("Timeout!")
+			return
+		}
+	}
+	return
+}
+
 func search() {
 	rand.Seed(time.Now().UnixNano())
 	start := time.Now()
 	// results := Google("golang")
-	results := GoogleWTimeout("golang")
+	// results := GoogleWTimeout("golang")
+	results := GoogleWTimeoutAndReplication("golang")
 	since := time.Since(start)
 	fmt.Println(results)
 	fmt.Println(since)
@@ -66,4 +89,16 @@ func fakeSearch(kind string) Search {
 		time.Sleep(time.Second * n)
 		return Result(fmt.Sprintf("The result for %s query about %s\n", kind, query))
 	}
+}
+
+// Takes a query function and a bunch of replica servers
+// Queries the replica servers and returns the first result
+// This prevents waiting around after having hit a particular slow server
+func First(query string, replicas ...Search) Result {
+	c := make(chan Result)
+	searchReplica := func(i int) { c <- replicas[i](query) }
+	for i := range replicas {
+		go searchReplica(i)
+	}
+	return <-c
 }
