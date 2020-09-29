@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package todo;
+
+// Code examples from https://www.youtube.com/watch?v=_jQ3i_fyqGA&t=840s&ab_channel=justforfunc%3AProgramminginGo
+
+
+message Task {
+    // new fields can be added later in any order, but these numbers should not change
+    string text  = 1;
+    bool done = 2;
+}
