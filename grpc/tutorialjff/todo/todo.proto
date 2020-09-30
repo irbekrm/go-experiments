@@ -4,9 +4,24 @@ package todo;
 
 // Code examples from https://www.youtube.com/watch?v=_jQ3i_fyqGA&t=840s&ab_channel=justforfunc%3AProgramminginGo
 
-
 message Task {
-    // new fields can be added later in any order, but these numbers should not change
-    string text  = 1;
+    string text = 1;
     bool done = 2;
+}
+
+message TaskList {
+    repeated Task tasks = 1;
+}
+
+// Void is needed as an empty type if an rpc method has no args/return values
+message Void{}
+
+message Text {
+    string text = 1;
+}
+
+service Tasks {
+    // List method has no need for arguments, so use Void message type defined above
+    rpc List(Void) returns(TaskList) {}
+    rpc Add(Text) returns(Task) {}
 }
