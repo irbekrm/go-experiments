@@ -29,3 +29,7 @@
 
 ### Testing a gRPC connection
 [grpcurl](https://github.com/fullstorydev/grpcurl) is great CLI tool for testing gRPC server that supports [server reflection](https://github.com/grpc/grpc-go/blob/master/Documentation/server-reflection-tutorial.md). Works also with Unix Domain sockets (i.e for testing CSI driver socket- `grpcurl -unix -plaintext /csi/csi.sock list`)
+
+`grpcurl -unix -plaintext -msg-template /csi/csi.sock   describe .csi.v1.NodePublishVolumeRequest` // example- get json template of a protobuf message
+
+https://www.youtube.com/watch?v=dDr-8kbMnaw&ab_channel=GopherAcademy&t=1s a talks about `grpcurl` and protobuf and grpc reflection, second part has actual `grpcurl` examples too
