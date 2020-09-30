@@ -28,4 +28,4 @@
 2. `protoc -I=[proto_dir_path] --go-grpc_out=[output_path --go_out=[output_path] [proto_file_name]`
 
 ### Testing a gRPC connection
-TO ADD: can be done with protoc somehow
+[grpcurl](https://github.com/fullstorydev/grpcurl) is great CLI tool for testing gRPC server that supports [server reflection](https://github.com/grpc/grpc-go/blob/master/Documentation/server-reflection-tutorial.md). Works also with Unix Domain sockets (i.e for testing CSI driver socket- `grpcurl -unix -plaintext /csi/csi.sock list`)
