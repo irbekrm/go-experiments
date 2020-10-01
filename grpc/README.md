@@ -33,3 +33,5 @@
 `grpcurl -unix -plaintext -msg-template /csi/csi.sock   describe .csi.v1.NodePublishVolumeRequest` // example- get json template of a protobuf message
 
 https://www.youtube.com/watch?v=dDr-8kbMnaw&ab_channel=GopherAcademy&t=1s a talks about `grpcurl` and protobuf and grpc reflection, second part has actual `grpcurl` examples too
+
+There is also [gRPC CLI](https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md)
