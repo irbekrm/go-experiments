@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Phrase {
+    string text = 1;
+    // an enum within a message. enums can also be package level
+    enum Language {
+        ENGLISH = 0;
+        LATVIAN = 1;
+        GERMAN = 2;
+    }
+    Language language = 2;
+}
