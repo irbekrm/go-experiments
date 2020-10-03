@@ -15,6 +15,10 @@
 
 `hexdump -c [FILE]` // Useful for debugging- see special characters in a file with data encoded using protocol buffers
 
+Docs etc:
+
+* https://developers.google.com/protocol-buffers
+
 ## gRPC
 
 ### With v1 (github.com/golang/protobuf/protoc-gen-go)
@@ -26,6 +30,9 @@
 
 // use --go_out= to generate go code for messages and --go-grpc_out to generate go code for services
 2. `protoc -I=[proto_dir_path] --go-grpc_out=[output_path --go_out=[output_path] [proto_file_name]`
+
+### Docs etc
+* https://www.grpc.io/docs/
 
 ### Testing a gRPC connection
 [grpcurl](https://github.com/fullstorydev/grpcurl) is great CLI tool for testing gRPC server that supports [server reflection](https://github.com/grpc/grpc-go/blob/master/Documentation/server-reflection-tutorial.md). Works also with Unix Domain sockets (i.e for testing CSI driver socket- `grpcurl -unix -plaintext /csi/csi.sock list`)
