@@ -25,6 +25,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
+// an enum within a message. enums can also be package level
 type Phrase_Language int32
 
 const (
@@ -129,6 +130,191 @@ func (x *Phrase) GetLanguage() Phrase_Language {
 	return Phrase_ENGLISH
 }
 
+type LiteraryPiece struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Only one of the fields poem and novel can be set at given time
+	//
+	// Types that are assignable to Type:
+	//	*LiteraryPiece_Poem_
+	//	*LiteraryPiece_Novel_
+	Type isLiteraryPiece_Type `protobuf_oneof:"type"`
+}
+
+func (x *LiteraryPiece) Reset() {
+	*x = LiteraryPiece{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_language_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LiteraryPiece) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LiteraryPiece) ProtoMessage() {}
+
+func (x *LiteraryPiece) ProtoReflect() protoreflect.Message {
+	mi := &file_language_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LiteraryPiece.ProtoReflect.Descriptor instead.
+func (*LiteraryPiece) Descriptor() ([]byte, []int) {
+	return file_language_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LiteraryPiece) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (m *LiteraryPiece) GetType() isLiteraryPiece_Type {
+	if m != nil {
+		return m.Type
+	}
+	return nil
+}
+
+func (x *LiteraryPiece) GetPoem() *LiteraryPiece_Poem {
+	if x, ok := x.GetType().(*LiteraryPiece_Poem_); ok {
+		return x.Poem
+	}
+	return nil
+}
+
+func (x *LiteraryPiece) GetNovel() *LiteraryPiece_Novel {
+	if x, ok := x.GetType().(*LiteraryPiece_Novel_); ok {
+		return x.Novel
+	}
+	return nil
+}
+
+type isLiteraryPiece_Type interface {
+	isLiteraryPiece_Type()
+}
+
+type LiteraryPiece_Poem_ struct {
+	Poem *LiteraryPiece_Poem `protobuf:"bytes,2,opt,name=poem,proto3,oneof"`
+}
+
+type LiteraryPiece_Novel_ struct {
+	Novel *LiteraryPiece_Novel `protobuf:"bytes,3,opt,name=novel,proto3,oneof"`
+}
+
+func (*LiteraryPiece_Poem_) isLiteraryPiece_Type() {}
+
+func (*LiteraryPiece_Novel_) isLiteraryPiece_Type() {}
+
+// Nested type
+type LiteraryPiece_Poem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Metre string `protobuf:"bytes,1,opt,name=metre,proto3" json:"metre,omitempty"`
+}
+
+func (x *LiteraryPiece_Poem) Reset() {
+	*x = LiteraryPiece_Poem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_language_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LiteraryPiece_Poem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LiteraryPiece_Poem) ProtoMessage() {}
+
+func (x *LiteraryPiece_Poem) ProtoReflect() protoreflect.Message {
+	mi := &file_language_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LiteraryPiece_Poem.ProtoReflect.Descriptor instead.
+func (*LiteraryPiece_Poem) Descriptor() ([]byte, []int) {
+	return file_language_proto_rawDescGZIP(), []int{1, 0}
+}
+
+func (x *LiteraryPiece_Poem) GetMetre() string {
+	if x != nil {
+		return x.Metre
+	}
+	return ""
+}
+
+type LiteraryPiece_Novel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Characters string `protobuf:"bytes,1,opt,name=characters,proto3" json:"characters,omitempty"`
+}
+
+func (x *LiteraryPiece_Novel) Reset() {
+	*x = LiteraryPiece_Novel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_language_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LiteraryPiece_Novel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LiteraryPiece_Novel) ProtoMessage() {}
+
+func (x *LiteraryPiece_Novel) ProtoReflect() protoreflect.Message {
+	mi := &file_language_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LiteraryPiece_Novel.ProtoReflect.Descriptor instead.
+func (*LiteraryPiece_Novel) Descriptor() ([]byte, []int) {
+	return file_language_proto_rawDescGZIP(), []int{1, 1}
+}
+
+func (x *LiteraryPiece_Novel) GetCharacters() string {
+	if x != nil {
+		return x.Characters
+	}
+	return ""
+}
+
 var File_language_proto protoreflect.FileDescriptor
 
 var file_language_proto_rawDesc = []byte{
@@ -140,8 +326,21 @@ var file_language_proto_rawDesc = []byte{
 	0x67, 0x65, 0x52, 0x08, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x22, 0x30, 0x0a, 0x08,
 	0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x45, 0x4e, 0x47, 0x4c,
 	0x49, 0x53, 0x48, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x4c, 0x41, 0x54, 0x56, 0x49, 0x41, 0x4e,
-	0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x47, 0x45, 0x52, 0x4d, 0x41, 0x4e, 0x10, 0x02, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x47, 0x45, 0x52, 0x4d, 0x41, 0x4e, 0x10, 0x02, 0x22, 0xcb,
+	0x01, 0x0a, 0x0d, 0x4c, 0x69, 0x74, 0x65, 0x72, 0x61, 0x72, 0x79, 0x50, 0x69, 0x65, 0x63, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x70, 0x6f, 0x65, 0x6d, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x13, 0x2e, 0x4c, 0x69, 0x74, 0x65, 0x72, 0x61, 0x72, 0x79, 0x50, 0x69, 0x65,
+	0x63, 0x65, 0x2e, 0x50, 0x6f, 0x65, 0x6d, 0x48, 0x00, 0x52, 0x04, 0x70, 0x6f, 0x65, 0x6d, 0x12,
+	0x2c, 0x0a, 0x05, 0x6e, 0x6f, 0x76, 0x65, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14,
+	0x2e, 0x4c, 0x69, 0x74, 0x65, 0x72, 0x61, 0x72, 0x79, 0x50, 0x69, 0x65, 0x63, 0x65, 0x2e, 0x4e,
+	0x6f, 0x76, 0x65, 0x6c, 0x48, 0x00, 0x52, 0x05, 0x6e, 0x6f, 0x76, 0x65, 0x6c, 0x1a, 0x1c, 0x0a,
+	0x04, 0x50, 0x6f, 0x65, 0x6d, 0x12, 0x14, 0x0a, 0x05, 0x6d, 0x65, 0x74, 0x72, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6d, 0x65, 0x74, 0x72, 0x65, 0x1a, 0x27, 0x0a, 0x05, 0x4e,
+	0x6f, 0x76, 0x65, 0x6c, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65,
+	0x72, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x68, 0x61, 0x72, 0x61, 0x63,
+	0x74, 0x65, 0x72, 0x73, 0x42, 0x06, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -157,18 +356,23 @@ func file_language_proto_rawDescGZIP() []byte {
 }
 
 var file_language_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_language_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_language_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_language_proto_goTypes = []interface{}{
-	(Phrase_Language)(0), // 0: Phrase.Language
-	(*Phrase)(nil),       // 1: Phrase
+	(Phrase_Language)(0),        // 0: Phrase.Language
+	(*Phrase)(nil),              // 1: Phrase
+	(*LiteraryPiece)(nil),       // 2: LiteraryPiece
+	(*LiteraryPiece_Poem)(nil),  // 3: LiteraryPiece.Poem
+	(*LiteraryPiece_Novel)(nil), // 4: LiteraryPiece.Novel
 }
 var file_language_proto_depIdxs = []int32{
 	0, // 0: Phrase.language:type_name -> Phrase.Language
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	3, // 1: LiteraryPiece.poem:type_name -> LiteraryPiece.Poem
+	4, // 2: LiteraryPiece.novel:type_name -> LiteraryPiece.Novel
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_language_proto_init() }
@@ -189,6 +393,46 @@ func file_language_proto_init() {
 				return nil
 			}
 		}
+		file_language_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LiteraryPiece); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_language_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LiteraryPiece_Poem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_language_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LiteraryPiece_Novel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
+	file_language_proto_msgTypes[1].OneofWrappers = []interface{}{
+		(*LiteraryPiece_Poem_)(nil),
+		(*LiteraryPiece_Novel_)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -196,7 +440,7 @@ func file_language_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_language_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

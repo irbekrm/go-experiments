@@ -11,25 +11,39 @@ import (
 
 type length int64
 
-const dbPath = "phrases.pb"
+const (
+	phrasesDb = "phrases.db"
+	litDb     = "lit.db"
+)
 
 func main() {
 	var (
-		addCommand = flag.NewFlagSet("add", flag.ExitOnError)
-		langPtr    = addCommand.String("lang", "", "language")
-		textPtr    = addCommand.String("text", "", "text")
+		addPhraseCommand = flag.NewFlagSet("add_phrase", flag.ExitOnError)
+		langPtr          = addPhraseCommand.String("lang", "", "language")
+		textPtr          = addPhraseCommand.String("text", "", "text")
+		addLitCommand    = flag.NewFlagSet("add_lit", flag.ExitOnError)
+		kindPtr          = addLitCommand.String("kind", "", "kind: novel or poem")
+		namePtr          = addLitCommand.String("name", "", "name of the piece")
+		metrePtr         = addLitCommand.String("metre", "", "metre for kind poem")
+		charactersPtr    = addLitCommand.String("chars", "", "comma separated characters for kind novel")
 	)
 
 	flag.Parse()
 	if flag.NArg() < 1 {
-		fmt.Fprintln(os.Stderr, "missing subcommand: add")
+		fmt.Fprintln(os.Stderr, "missing subcommand: add_phrase")
 		os.Exit(1)
 	}
 	switch os.Args[1] {
-	case "add":
-		addCommand.Parse(os.Args[2:])
-		if err := add(*textPtr, *langPtr); err != nil {
-			fmt.Fprintf(os.Stderr, "could not add text %s: %v", *textPtr, err)
+	case "add_phrase":
+		addPhraseCommand.Parse(os.Args[2:])
+		if err := addPhrase(*textPtr, *langPtr); err != nil {
+			fmt.Fprintf(os.Stderr, "could not add phrase %s: %v", *textPtr, err)
+			os.Exit(1)
+		}
+	case "add_lit":
+		addLitCommand.Parse(os.Args[2:])
+		if err := addLiteraryPiece(*namePtr, *kindPtr, *metrePtr, *charactersPtr); err != nil {
+			fmt.Fprintf(os.Stderr, "could not add literary piece %s: %v", *namePtr, err)
 			os.Exit(1)
 		}
 	default:
@@ -38,7 +52,7 @@ func main() {
 	}
 }
 
-func add(text, lang string) error {
+func addPhrase(text, lang string) error {
 	val, ok := language.Phrase_Language_value[lang]
 	if !ok {
 		return fmt.Errorf("language %s not supported", lang)
@@ -50,19 +64,46 @@ func add(text, lang string) error {
 	}
 	// wire-encode the phrase
 	b, err := proto.Marshal(&phrase)
-
-	f, err := os.OpenFile(dbPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		return fmt.Errorf("could not open %s: %v", dbPath, err)
+		return fmt.Errorf("could not encode %v: %v", phrase, err)
 	}
-	_, err = f.Write(b)
+	return writeFile(b, phrasesDb)
+}
+
+func addLiteraryPiece(name, kind, metre, characters string) error {
+	var lp language.LiteraryPiece
+	switch kind {
+	case "poem":
+		p := language.LiteraryPiece_Poem{Metre: metre}
+		pp := language.LiteraryPiece_Poem_{Poem: &p}
+		lp = language.LiteraryPiece{Name: name, Type: &pp}
+	case "novel":
+		n := language.LiteraryPiece_Novel{Characters: characters}
+		nn := language.LiteraryPiece_Novel_{Novel: &n}
+		lp = language.LiteraryPiece{Name: name, Type: &nn}
+	default:
+		return fmt.Errorf("unknown type: %s", kind)
+	}
+	// wire-encode the struct
+	b, err := proto.Marshal(&lp)
+	if err != nil {
+		return fmt.Errorf("could not encode %v: %v", lp, err)
+	}
+	return writeFile(b, litDb)
+}
+
+func writeFile(data []byte, filename string) error {
+	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return fmt.Errorf("could not open %s: %v", filename, err)
+	}
+	_, err = f.Write(data)
 	if err != nil {
 		return fmt.Errorf("could not write task to file: %v", err)
 	}
 
 	if err := f.Close(); err != nil {
-		return fmt.Errorf("could not close file %s: %v", dbPath, err)
+		return fmt.Errorf("could not close file %s: %v", filename, err)
 	}
-	fmt.Printf("Phrase is %#v", phrase)
 	return nil
 }

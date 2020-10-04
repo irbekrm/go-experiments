@@ -10,3 +10,19 @@ message Phrase {
     }
     Language language = 2;
 }
+
+message LiteraryPiece {
+    string name = 1;
+    // Nested type
+    message Poem {
+        string metre = 1;
+    }
+    message Novel {
+        string characters = 1;
+    }
+    // Only one of the fields poem and novel can be set at given time
+    oneof type {
+        Poem poem = 2;
+        Novel novel = 3;
+    }
+}
