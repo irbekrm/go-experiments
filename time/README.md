@@ -12,3 +12,7 @@
 
 ## Useful resources
 - CLOCK_REALTIME (wall clock) vs CLOCK_MONOTONIC https://stackoverflow.com/questions/3523442/difference-between-clock-realtime-and-clock-monotonic
+- https://gobyexample.com/time-formatting-parsing
+- https://gobyexample.com/epoch
+- https://gobyexample.com/time
+
